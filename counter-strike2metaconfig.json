@@ -1,6 +1,6 @@
 [
     {
-        "ConfigFile": "csgo/cfg/server.cfg",
+        "ConfigFile": "game/csgo/cfg/server.cfg",
         "AutoMap": true,
         "ConfigType": "template",
         "ConfigFileTemplate": "csgo/AMP_server.cfg"

@@ -1,89 +1,97 @@
 [
-    {
-        "UpdateStageName": "SteamCMD Server Download",
-        "UpdateSourcePlatform": "All",
-        "UpdateSource": "SteamCMD",
-        "UpdateSourceData": "730",
-        "UpdateSourceArgs": "730",
-        "SkipOnFailure": false,
-  	"UpdateSourceConditionSetting": "UseSharedInstall",
-  	"UpdateSourceConditionValue": "false"
-    },
-    {
-    	"UpdateStageName": "Server.cfg Template File Download",
-    	"UpdateSourcePlatform": "Linux",
-    	"UpdateSource": "FetchURL",
-    	"UpdateSourceData": "https://raw.githubusercontent.com/mrc4tt/AMPTemplates/main/counter-strike2server.cfg",
-    	"UpdateSourceArgs": "AMP_server.cfg",
-    	"UpdateSourceTarget": "{{$FullBaseDir}}game/csgo",
-    	"OverwriteExistingFiles": false,
-    	"SkipOnFailure": false,
-  	"UpdateSourceConditionSetting": "IsFirstRun",
-  	"UpdateSourceConditionValue": "true"
-    },
-    {
-  	"UpdateStageName": "Create Shared Layout (Linux, first run)",
-  	"UpdateSourcePlatform": "Linux",
-  	"UpdateSource": "Executable",
-  	"UpdateSourceData": "/bin/bash",
-  	"UpdateSourceArgs": "-c \"sym_dir_path=/opt/steamapps/cs2 user_gs_path=counter-strike2/730 /opt/amp-scripts/create-clean.sh\"",
-  	"SkipOnFailure": false,
-  	"UpdateSourceConditionSetting": "UseSharedInstall",
-  	"UpdateSourceConditionValue": "true"
-    },
-    {
-  	"UpdateStageName": "Refresh Shared VPKs (Linux)",
-  	"UpdateSourcePlatform": "Linux",
-  	"UpdateSource": "Executable",
-  	"UpdateSourceData": "/bin/bash",
-  	"UpdateSourceArgs": "-c \"sym_dir_path=/opt/steamapps/cs2 user_gs_path=counter-strike2/730 /opt/amp-scripts/update-clean.sh\"",
-  	"SkipOnFailure": false,
-  	"UpdateSourceConditionSetting": "UseSharedInstall",
-  	"UpdateSourceConditionValue": "true"
-    },
-    {
-        "UpdateStageName": "Metamod Download",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"MetamodBuild=\\\"{{MetamodBuild}}\\\" && MetamodBranch=\\\"{{MetamodBranch}}\\\" && if [[ -z \\\"$MetamodBuild\\\" ]]; then LatestMetamodFile=$(wget -qO- https://mms.alliedmods.net/mmsdrop/$MetamodBranch/mmsource-latest-linux) && wget -qO metamod.tar.gz https://mms.alliedmods.net/mmsdrop/$MetamodBranch/$LatestMetamodFile && echo \\\"Latest Metamod $MetamodBranch build downloaded\\\"; elif [[ ! \\\"$MetamodBuild\\\" =~ ^[0-9]+$ ]]; then echo \\\"Invalid Metamod build version format specified\\\" && exit 1; else wget -qO metamod.tar.gz https://mms.alliedmods.net/mmsdrop/$MetamodBranch/mmsource-$MetamodBranch.0-git$MetamodBuild-linux.tar.gz && echo \\\"Metamod $MetamodBranch build $MetamodBuild downloaded\\\"; fi\"",
-        "UpdateSourceConditionSetting": "InstallMetamod",
-        "UpdateSourceConditionValue": "true",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Metamod Extract",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "ExtractArchive",
-        "UpdateSourceData": "metamod.tar.gz",
-        "UpdateSourceTarget": "{{$FullBaseDir}}game/csgo",
-        "OverwriteExistingFiles": true,
-        "DeleteAfterExtract": true,
-        "UpdateSourceConditionSetting": "InstallMetamod",
-        "UpdateSourceConditionValue": "true",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "Activate Metamod",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "Executable",
-        "UpdateSourceData": "/bin/bash",
-        "UpdateSourceArgs": "-c \"sed -i \\\"/^\\s*Game\\s*csgo\\s*$/ { s//\\t\\t\\tGame\\tcsgo\\/addons\\/metamod\\n&/ }\\\" counter-strike2/730/game/csgo/gameinfo.gi\"",
-        "UpdateSourceConditionSetting": "InstallMetamod",
-        "UpdateSourceConditionValue": "true",
-        "SkipOnFailure": false
-    },
-    {
-        "UpdateStageName": "CounterStrikeSharp Download",
-        "UpdateSourcePlatform": "Linux",
-        "UpdateSource": "FetchURLFromJQ",
-        "UpdateSourceData": "https://api.github.com/repos/roflmuffin/CounterStrikeSharp/releases/latest",
-        "UpdateSourceArgs": "$.assets[2].browser_download_url",
-        "UpdateSourceTarget": "{{$FullBaseDir}}game/csgo",
-        "UnzipUpdateSource": true,
-        "OverwriteExistingFiles": true,
-        "UpdateSourceConditionSetting": "InstallCSSharp",
-        "UpdateSourceConditionValue": "true",
-        "DeleteAfterExtract": true
-    }
+  {
+    "UpdateStageName": "SteamCMD Server Download",
+    "UpdateSourcePlatform": "All",
+    "UpdateSource": "SteamCMD",
+    "UpdateSourceData": "730",
+    "UpdateSourceArgs": "730",
+    "SkipOnFailure": false,
+    "UpdateSourceConditionSetting": "UseSharedInstall",
+    "UpdateSourceConditionValue": "false"
+  },
+  {
+    "UpdateStageName": "Server.cfg Template File Download",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://raw.githubusercontent.com/mrc4tt/AMPTemplates/main/counter-strike2server.cfg",
+    "UpdateSourceArgs": "AMP_server.cfg",
+    "UpdateSourceTarget": "{{$FullBaseDir}}game/csgo/cfg/AMP_server.cfg",
+    "OverwriteExistingFiles": false,
+    "SkipOnFailure": false,
+    "UpdateSourceConditionSetting": "IsFirstRun",
+    "UpdateSourceConditionValue": "true"
+  },
+  {
+    "UpdateStageName": "Publish demo base + instance ID + nginx symlink",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c '\nset -e\nCFG=\"counter-strike2/730/game/csgo/cfg/amp_auto.cfg\"\nINSTANCE_ID=\"$(basename \"$PWD\")\"\nHN=$(hostname -s)\n# 1) Auto-domain fra hostname\ncase \"$HN\" in\n  *de1*|*DE1*) BASE=\"https://de1.mrc4t.xyz\" ;;\n  *de2*|*DE2*) BASE=\"https://de2.mrc4t.xyz\" ;;\n  *)           BASE=\"https://de1.mrc4t.xyz\" ;;\n esac\n# 2) Override fra AMP-felt hvis udfyldt\nOVR=\"{{DemoBaseOverride}}\"\nif [ -n \"$OVR\" ]; then BASE=\"$OVR\"; fi\n# 3) Skriv/overskriv cvars i amp_auto.cfg\nmkdir -p \"$(dirname \"$CFG\")\"\ngrep -v -E \"^(cstv_demo_base|cstv_server_id)\\b\" \"$CFG\" 2>/dev/null > \"$CFG.tmp\" || true\nprintf \"cstv_demo_base \\\"%s\\\"\\n\" \"$BASE\" >> \"$CFG.tmp\"\nprintf \"cstv_server_id \\\"%s\\\"\\n\" \"$INSTANCE_ID\" >> \"$CFG.tmp\"\nmv \"$CFG.tmp\" \"$CFG\"\n# 4) Offentligt symlink til nginx: /srv/demos/<InstanceID> -> .../demos\nSRC=\"counter-strike2/730/game/csgo/demos\"\nDST=\"/srv/demos/$INSTANCE_ID\"\nif command -v sudo >/dev/null 2>&1; then SUDO=sudo; else SUDO=; fi\n$SUDO mkdir -p /srv/demos\n$SUDO ln -sfnT \"$(readlink -f \"$SRC\")\" \"$DST\"\necho \"[publish] $INSTANCE_ID -> $BASE/$INSTANCE_ID/\"\n'",
+    "SkipOnFailure": false
+  },
+  {
+    "UpdateStageName": "Create Shared Layout (Linux, first run)",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"sym_dir_path=/opt/steamapps/cs2 user_gs_path=counter-strike2/730 /opt/amp-scripts/create-clean.sh\"",
+    "SkipOnFailure": false,
+    "UpdateSourceConditionSetting": "UseSharedInstall",
+    "UpdateSourceConditionValue": "true"
+  },
+  {
+    "UpdateStageName": "Refresh Shared VPKs (Linux)",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"sym_dir_path=/opt/steamapps/cs2 user_gs_path=counter-strike2/730 /opt/amp-scripts/update-clean.sh\"",
+    "SkipOnFailure": false,
+    "UpdateSourceConditionSetting": "UseSharedInstall",
+    "UpdateSourceConditionValue": "true"
+  },
+  {
+    "UpdateStageName": "Metamod Download",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"MetamodBuild=\\\"{{MetamodBuild}}\\\" && MetamodBranch=\\\"{{MetamodBranch}}\\\" && if [[ -z \\\"$MetamodBuild\\\" ]]; then LatestMetamodFile=$(wget -qO- https://mms.alliedmods.net/mmsdrop/$MetamodBranch/mmsource-latest-linux) && wget -qO metamod.tar.gz https://mms.alliedmods.net/mmsdrop/$MetamodBranch/$LatestMetamodFile && echo \\\"Latest Metamod $MetamodBranch build downloaded\\\"; elif [[ ! \\\"$MetamodBuild\\\" =~ ^[0-9]+$ ]]; then echo \\\"Invalid Metamod build version format specified\\\" && exit 1; else wget -qO metamod.tar.gz https://mms.alliedmods.net/mmsdrop/$MetamodBranch/mmsource-$MetamodBranch.0-git$MetamodBuild-linux.tar.gz && echo \\\"Metamod $MetamodBranch build $MetamodBuild downloaded\\\"; fi\"",
+    "UpdateSourceConditionSetting": "InstallMetamod",
+    "UpdateSourceConditionValue": "true",
+    "SkipOnFailure": false
+  },
+  {
+    "UpdateStageName": "Metamod Extract",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "ExtractArchive",
+    "UpdateSourceData": "metamod.tar.gz",
+    "UpdateSourceTarget": "{{$FullBaseDir}}game/csgo",
+    "OverwriteExistingFiles": true,
+    "DeleteAfterExtract": true,
+    "UpdateSourceConditionSetting": "InstallMetamod",
+    "UpdateSourceConditionValue": "true",
+    "SkipOnFailure": false
+  },
+  {
+    "UpdateStageName": "Activate Metamod",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "Executable",
+    "UpdateSourceData": "/bin/bash",
+    "UpdateSourceArgs": "-c \"sed -i \\\"/^\\s*Game\\s*csgo\\s*$/ { s//\\t\\t\\tGame\\tcsgo\\/addons\\/metamod\\n&/ }\\\" counter-strike2/730/game/csgo/gameinfo.gi\"",
+    "UpdateSourceConditionSetting": "InstallMetamod",
+    "UpdateSourceConditionValue": "true",
+    "SkipOnFailure": false
+  },
+  {
+    "UpdateStageName": "CounterStrikeSharp Download",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "FetchURLFromJQ",
+    "UpdateSourceData": "https://api.github.com/repos/roflmuffin/CounterStrikeSharp/releases/latest",
+    "UpdateSourceArgs": "$.assets[2].browser_download_url",
+    "UpdateSourceTarget": "{{$FullBaseDir}}game/csgo",
+    "UnzipUpdateSource": true,
+    "OverwriteExistingFiles": true,
+    "UpdateSourceConditionSetting": "InstallCSSharp",
+    "UpdateSourceConditionValue": "true",
+    "DeleteAfterExtract": true
+  }
 ]

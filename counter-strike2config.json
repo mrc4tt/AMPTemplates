@@ -55,29 +55,41 @@
     {
         "DisplayName": "GOTV Mode",
         "Category": "Server Settings",
-        "Subcategory": "GOTV",
+        "Subcategory": "General",
         "Description": "Select GOTV behavior (adds the right startup args)",
         "Keywords": "cstv,gotv",
         "FieldName": "CSTVArgs",
-        "InputType": "select",
+        "InputType": "checkbox",
         "ParamFieldName": "CSTVArgs",
         "DefaultValue": "-nohltv",
         "EnumValues": {
-            "Disabled (CSTV off)": "-nohltv",
-            "Enabled (CSTV on)": "+tv_enable 1 +tv_enable_dynamic 1 +tv_port {{CSTVPort}}"
+            "False": "-nohltv",
+            "True": "+tv_enable 1 +tv_enable_dynamic 1 +tv_port {{CSTVPort}}"
         }
     },
     {
-  	"DisplayName": "Discord Webhook URL",
-  	"Category": "Server Settings",
-  	"Subcategory": "Discord",
-  	"Description": "Webhook URL used by CS2 add-ons to send messages to Discord - GOTV Mode required",
-  	"FieldName": "cstvdiscord",
-  	"InputType": "text",
-  	"ParamFieldName": "cstvdiscord",
-  	"DefaultValue": "",
-  	"Placeholder": "https://discord.com/api/webhooks/...",
-  	"EnumValues": {}
+        "DisplayName": "Demo Base URL Override",
+        "Category": "Server Settings",
+        "Subcategory": "Discord",
+        "Description": "Blank = auto fra hostname. Udfyldt = brug denne URL som base (fx https://de1.mrc4t.xyz).",
+        "FieldName": "DemoBaseOverride",
+        "InputType": "text",
+        "ParamFieldName": "DemoBaseOverride",
+        "DefaultValue": "",
+        "Placeholder": "https://de1.mrc4t.xyz",
+        "EnumValues": {}
+    },
+    {
+        "DisplayName": "Discord Webhook URL",
+        "Category": "Server Settings",
+        "Subcategory": "General",
+        "Description": "Webhook URL used by CS2 add-ons to send messages to Discord - GOTV Mode required",
+        "FieldName": "cstvdiscord",
+        "InputType": "text",
+        "ParamFieldName": "cstvdiscord",
+        "DefaultValue": "",
+        "Placeholder": "https://discord.com/api/webhooks/...",
+        "EnumValues": {}
     },
     {
         "DisplayName": "Initial Game Mode",
@@ -86,12 +98,12 @@
         "Description": "Sets game_type and game_mode for startup",
         "Keywords": "game,mode,gamemode,game_mode,game_type",
         "FieldName": "gamemode",
-        "InputType": "enum",
+        "InputType": "select",
         "ParamFieldName": "gamemode",
         "DefaultValue": "+game_type 0 +game_mode 1",
         "EnumValues": {
-            "Casual": "+game_type 0 +game_mode 0",
             "Competitive (default)": "+game_type 0 +game_mode 1",
+            "Casual": "+game_type 0 +game_mode 0",
             "Wingman (2v2)": "+game_type 0 +game_mode 2",
             "Arms Race": "+game_type 1 +game_mode 0",
             "Deathmatch": "+game_type 1 +game_mode 2"
@@ -104,7 +116,7 @@
         "Description": "Map to boot into (Workshop Map overrides this)",
         "Keywords": "map",
         "FieldName": "map",
-        "InputType": "enum",
+        "InputType": "select",
         "ParamFieldName": "map",
         "IncludeInCommandLine": true,
         "DefaultValue": "de_dust2",
@@ -169,7 +181,7 @@
     {
         "DisplayName": "Player Limit",
         "Category": "Server Settings",
-        "Subcategory": "Limits",
+        "Subcategory": "General",
         "Description": "Maximum concurrent players",
         "Keywords": "max,players,limit,maxplayers",
         "FieldName": "$MaxUsers",
@@ -185,7 +197,7 @@
     {
         "DisplayName": "Disable Valve Anti-Cheat",
         "Category": "Server Settings",
-        "Subcategory": "Security",
+        "Subcategory": "General",
         "Description": "If enabled, passes -insecure to disable VAC",
         "Keywords": "valve,anti,cheat,vac,insecure",
         "FieldName": "insecure",
@@ -250,7 +262,7 @@
     },
     {
         "DisplayName": "Install Metamod Source",
-        "Category": "Updates",
+        "Category": "Mods",
         "Subcategory": "Metamod & CSSharp",
         "Description": "Install and activate Metamod on update",
         "Keywords": "install,metamod",
@@ -265,7 +277,7 @@
     },
     {
         "DisplayName": "Metamod Branch",
-        "Category": "Updates",
+        "Category": "Mods",
         "Subcategory": "Metamod & CSSharp",
         "Description": "Metamod branch to install",
         "Keywords": "metamod,branch",
@@ -279,7 +291,7 @@
     },
     {
         "DisplayName": "Metamod Build Version",
-        "Category": "Updates",
+        "Category": "Mods",
         "Subcategory": "Metamod & CSSharp",
         "Description": "Empty = latest for selected branch",
         "Keywords": "metamod,build,version",
@@ -292,7 +304,7 @@
     },
     {
         "DisplayName": "Install CounterStrikeSharp",
-        "Category": "Updates",
+        "Category": "Mods",
         "Subcategory": "Metamod & CSSharp",
         "Description": "Install latest CounterStrikeSharp on update (requires Metamod)",
         "Keywords": "install,cssharp,counterstrikesharp",
