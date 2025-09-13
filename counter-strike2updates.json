@@ -10,26 +10,6 @@
     "UpdateSourceConditionValue": "false"
   },
   {
-    "UpdateStageName": "Server.cfg Template File Download",
-    "UpdateSourcePlatform": "Linux",
-    "UpdateSource": "FetchURL",
-    "UpdateSourceData": "https://raw.githubusercontent.com/mrc4tt/AMPTemplates/main/counter-strike2server.cfg",
-    "UpdateSourceArgs": "AMP_server.cfg",
-    "UpdateSourceTarget": "{{$FullBaseDir}}game/csgo/cfg/AMP_server.cfg",
-    "OverwriteExistingFiles": false,
-    "SkipOnFailure": false,
-    "UpdateSourceConditionSetting": "IsFirstRun",
-    "UpdateSourceConditionValue": "true"
-  },
-  {
-    "UpdateStageName": "Publish demo base + instance ID + nginx symlink",
-    "UpdateSourcePlatform": "Linux",
-    "UpdateSource": "Executable",
-    "UpdateSourceData": "/bin/bash",
-    "UpdateSourceArgs": "-lc '/opt/amp-scripts/publish-demo.sh'",
-    "SkipOnFailure": false
-  },
-  {
     "UpdateStageName": "Create Shared Layout (Linux, first run)",
     "UpdateSourcePlatform": "Linux",
     "UpdateSource": "Executable",
@@ -47,6 +27,18 @@
     "UpdateSourceArgs": "-c \"sym_dir_path=/opt/steamapps/cs2 user_gs_path=counter-strike2/730 /opt/amp-scripts/update-clean.sh\"",
     "SkipOnFailure": false,
     "UpdateSourceConditionSetting": "UseSharedInstall",
+    "UpdateSourceConditionValue": "true"
+  },  
+  {
+    "UpdateStageName": "Server.cfg Template File Download",
+    "UpdateSourcePlatform": "Linux",
+    "UpdateSource": "FetchURL",
+    "UpdateSourceData": "https://raw.githubusercontent.com/mrc4tt/AMPTemplates/main/counter-strike2server.cfg",
+    "UpdateSourceArgs": "AMP_server.cfg",
+    "UpdateSourceTarget": "{{$FullBaseDir}}game/csgo/cfg/AMP_server.cfg",
+    "OverwriteExistingFiles": false,
+    "SkipOnFailure": false,
+    "UpdateSourceConditionSetting": "IsFirstRun",
     "UpdateSourceConditionValue": "true"
   },
   {
