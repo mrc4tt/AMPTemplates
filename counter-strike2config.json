@@ -72,10 +72,11 @@
         "Category": "Server Settings",
         "Subcategory": "Discord",
         "Description": "Blank = auto fra hostname. Udfyldt = brug denne URL som base (fx https://de1.mrc4t.xyz).",
-        "FieldName": "DemoBaseOverride",
-        "InputType": "text",
-        "ParamFieldName": "DemoBaseOverride",
-        "DefaultValue": "",
+        "FieldName": "cstvhost",
+        "InputType": "password",
+        "ParamFieldName": "cstvhost",
+        "IncludeInCommandLine": true,
+        "DefaultValue": "de1.mrc4t.xyz",
         "Placeholder": "https://de1.mrc4t.xyz",
         "EnumValues": {}
     },
@@ -262,7 +263,7 @@
     },
     {
         "DisplayName": "Install Metamod Source",
-        "Category": "Mods",
+        "Category": "Addons",
         "Subcategory": "Metamod & CSSharp",
         "Description": "Install and activate Metamod on update",
         "Keywords": "install,metamod",
@@ -277,7 +278,7 @@
     },
     {
         "DisplayName": "Metamod Branch",
-        "Category": "Mods",
+        "Category": "Addons",
         "Subcategory": "Metamod & CSSharp",
         "Description": "Metamod branch to install",
         "Keywords": "metamod,branch",
@@ -291,7 +292,7 @@
     },
     {
         "DisplayName": "Metamod Build Version",
-        "Category": "Mods",
+        "Category": "Addons",
         "Subcategory": "Metamod & CSSharp",
         "Description": "Empty = latest for selected branch",
         "Keywords": "metamod,build,version",
@@ -304,7 +305,7 @@
     },
     {
         "DisplayName": "Install CounterStrikeSharp",
-        "Category": "Mods",
+        "Category": "Addons",
         "Subcategory": "Metamod & CSSharp",
         "Description": "Install latest CounterStrikeSharp on update (requires Metamod)",
         "Keywords": "install,cssharp,counterstrikesharp",
