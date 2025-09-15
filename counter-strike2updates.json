@@ -35,7 +35,7 @@
     "UpdateSource": "FetchURL",
     "UpdateSourceData": "https://raw.githubusercontent.com/mrc4tt/AMPTemplates/main/counter-strike2server.cfg",
     "UpdateSourceArgs": "AMP_server.cfg",
-    "UpdateSourceTarget": "{{$FullBaseDir}}game/csgo/cfg/AMP_server.cfg",
+    "UpdateSourceTarget": "{{$FullBaseDir}}/game/csgo/cfg/AMP_server.cfg",
     "OverwriteExistingFiles": false,
     "SkipOnFailure": false,
     "UpdateSourceConditionSetting": "IsFirstRun",

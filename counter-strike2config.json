@@ -62,10 +62,10 @@
         "InputType": "checkbox",
         "ParamFieldName": "CSTVArgs",
         "IncludeInCommandLine": true,
-        "DefaultValue": "-nohltv",
+        "DefaultValue": "",
         "EnumValues": {
             "False": "-nohltv",
-            "True": "+tv_enable 1 +tv_enable_dynamic 1 +tv_port {{CSTVPort}}"
+            "True": "+tv_enable 1 +tv_enable_dynamic 1 +tv_port {{$CSTVPort}}"
         }
     },
     {
