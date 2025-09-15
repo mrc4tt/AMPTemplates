@@ -58,9 +58,10 @@
         "Subcategory": "General",
         "Description": "Select GOTV behavior (adds the right startup args)",
         "Keywords": "cstv,gotv",
-        "FieldName": "CSTVArgs",
+        "FieldName": "$CSTVArgs",
         "InputType": "checkbox",
         "ParamFieldName": "CSTVArgs",
+        "IncludeInCommandLine": true,
         "DefaultValue": "-nohltv",
         "EnumValues": {
             "False": "-nohltv",
