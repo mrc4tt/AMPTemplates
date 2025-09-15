@@ -72,13 +72,12 @@
         "DisplayName": "Demo Base URL Override",
         "Category": "Server Settings",
         "Subcategory": "Discord",
-        "Description": "Blank = auto fra hostname. Udfyldt = brug denne URL som base (fx https://de1.mrc4t.xyz).",
+        "Description": "This is used for DemoURL",
         "FieldName": "cstvhost",
-        "InputType": "password",
+        "InputType": "hidden",
         "ParamFieldName": "cstvhost",
         "IncludeInCommandLine": true,
         "DefaultValue": "de1.mrc4t.xyz",
-        "Placeholder": "https://de1.mrc4t.xyz",
         "EnumValues": {}
     },
     {
